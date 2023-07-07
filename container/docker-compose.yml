@@ -1,0 +1,20 @@
+version: '3.8'
+
+volumes:
+  mysql:
+
+services:
+  db:
+    build: ./database
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./database:/workspace/database
+      - ./database/initdb:/docker-entrypoint-initdb.d
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 3306:3306
